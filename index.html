@@ -689,6 +689,20 @@
 
     .proj-link:hover .arrow { transform: translateX(5px); }
 
+    .proj-links-row {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+
+    .proj-link-secondary {
+      opacity: 0.5;
+    }
+    .proj-link-secondary:hover {
+      opacity: 1;
+    }
+
     /* ---- EXPERIENCE ---- */
     .timeline {
       position: relative;
@@ -978,12 +992,12 @@
     body.inverted .proj-badge { background: #111; border-color: #333; color: #ccc; }
     body.inverted .proj-link { color: #fff; }
 
-    body.inverted .project-card.featured { background: #fff; color: #000; border-color: #fff; }
-    body.inverted .project-card.featured .proj-num { color: #aaa; }
-    body.inverted .project-card.featured .proj-desc { color: #555; }
-    body.inverted .project-card.featured .proj-badge { background: #f0f0f0; border-color: #ddd; color: #333; }
-    body.inverted .project-card.featured .proj-link { color: #000; }
-    body.inverted .project-card.featured::before { background: #000; }
+    body.inverted .project-card.featured { background: #111; color: #fff; border-color: #fff; box-shadow: 0 0 0 1px #fff; }
+    body.inverted .project-card.featured .proj-num { color: #555; }
+    body.inverted .project-card.featured .proj-desc { color: #aaa; }
+    body.inverted .project-card.featured .proj-badge { background: #1e1e1e; border-color: #444; color: #ccc; }
+    body.inverted .project-card.featured .proj-link { color: #fff; }
+    body.inverted .project-card.featured::before { background: #fff; }
 
     body.inverted .timeline::before { background: #222; }
     body.inverted .timeline-item::before { background: #fff; }
@@ -1254,11 +1268,11 @@
             <span class="proj-badge">Node.js</span>
             <span class="proj-badge">IU Hackathon</span>
           </div>
-          <div style="display:flex; gap: 1rem; flex-wrap: wrap; margin-top: auto;">
-            <a href="https://launchit-frontend.onrender.com/" target="_blank" class="proj-link" style="color:#fff;">
+          <div class="proj-links-row">
+            <a href="https://launchit-frontend.onrender.com/" target="_blank" class="proj-link">
               Live Demo <span class="arrow">&#8594;</span>
             </a>
-            <a href="https://github.com/Rujul13/Launch-It" target="_blank" class="proj-link" style="color:#aaa;">
+            <a href="https://github.com/Rujul13/Launch-It" target="_blank" class="proj-link proj-link-secondary">
               GitHub <span class="arrow">&#8594;</span>
             </a>
           </div>
