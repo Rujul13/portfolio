@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "Rujul_Jadav_Prakash.pdf", "use": "@vercel/static" }
+  ],
+  "routes": [
+    {
+      "src": "/Rujul_Jadav_Prakash.pdf",
+      "headers": { "Content-Disposition": "attachment; filename=\"Rujul_Jadav_Prakash.pdf\"" },
+      "dest": "/Rujul_Jadav_Prakash.pdf"
+    },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
