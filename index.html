@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rujul Jadav Prakash</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Press+Start+2P&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -141,12 +141,18 @@
     /* ---- HERO ---- */
     .hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
       padding: 8rem 3rem 4rem;
       position: relative;
       overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
     }
 
     .hero-eyebrow {
@@ -159,7 +165,7 @@
     }
 
     .hero-name {
-      font-size: clamp(3.5rem, 9vw, 9rem);
+      font-size: clamp(2.8rem, 5.5vw, 6.5rem);
       font-weight: 700;
       line-height: 0.92;
       letter-spacing: -0.03em;
@@ -366,12 +372,109 @@
       color: #bbb;
       text-transform: uppercase;
       animation: bounce-y 1.8s ease-in-out infinite;
+      grid-column: 1 / -1;
     }
 
     @keyframes bounce-y {
       0%,100% { transform: translateX(-50%) translateY(0); }
       50%     { transform: translateX(-50%) translateY(8px); }
     }
+
+    /* ---- TERMINAL ---- */
+    .terminal-wrap {
+      opacity: 0;
+      animation: fade-in 0.6s 0.9s forwards;
+      align-self: center;
+    }
+
+    .terminal {
+      background: #0d0d0d;
+      border: 1px solid #333;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.72rem;
+      overflow: hidden;
+      box-shadow: 8px 8px 0 #000;
+      position: relative;
+    }
+
+    .term-bar {
+      background: #1a1a1a;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .term-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #333;
+    }
+
+    .term-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.32rem;
+      color: #555;
+      margin-left: 0.5rem;
+      letter-spacing: 0.1em;
+    }
+
+    .term-body {
+      padding: 1.1rem 1.3rem;
+      min-height: 300px;
+      max-height: 340px;
+      overflow: hidden;
+      line-height: 1.85;
+    }
+
+    .term-line {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+    .term-line.visible { opacity: 1; }
+
+    .t-prompt { color: #555; flex-shrink: 0; user-select: none; }
+    .t-cmd    { color: #fff; }
+    .t-out    { color: #777; padding-left: 1.1rem; }
+    .t-green  { color: #86efac; }
+    .t-white  { color: #ddd; }
+    .t-dim    { color: #444; }
+
+    .t-cursor {
+      display: inline-block;
+      width: 7px; height: 13px;
+      background: #fff;
+      vertical-align: middle;
+      margin-left: 1px;
+      animation: t-blink 0.7s step-end infinite;
+    }
+    @keyframes t-blink { 50% { opacity: 0; } }
+
+    .term-scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(0,0,0,0.07) 2px,
+        rgba(0,0,0,0.07) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* inverted terminal — stays dark, just border changes */
+    body.inverted .terminal {
+      border-color: #fff;
+      box-shadow: 8px 8px 0 #fff;
+    }
+    body.inverted .term-bar { border-bottom-color: #333; }
+    body.inverted .term-dot  { background: #555; }
 
     /* ---- SECTION WRAPPER ---- */
     .section-wrap {
@@ -1021,10 +1124,17 @@
     body.inverted .invert-btn:hover { background: #000; color: #fff; }
 
     /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 7rem 1.5rem 3rem;
+      }
+      .terminal-wrap { display: none; }
+    }
+
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { gap: 1.5rem; }
-      .hero { padding: 7rem 1.5rem 3rem; }
       .section-wrap { padding: 5rem 1.5rem; }
       .about-grid { grid-template-columns: 1fr; }
       .about-photo-col { position: static; }
@@ -1059,32 +1169,50 @@
 
   <!-- HERO -->
   <section class="hero" id="home">
-    <p class="hero-eyebrow">Software Development Engineer</p>
 
-    <h1 class="hero-name">
-      <span class="line"><span class="glitch-wrap" data-text="RUJUL">RUJUL</span></span>
-      <span class="line"><span class="glitch-wrap" data-text="JADAV">JADAV</span></span>
-      <span class="line"><span class="glitch-wrap" data-text="PRAKASH">PRAKASH</span></span>
-    </h1>
+    <!-- LEFT -->
+    <div class="hero-left">
+      <p class="hero-eyebrow">Software Development Engineer</p>
 
-    <p class="hero-sub">
-      Applied AI Engineer. MS CS at Indiana University. I take LLMs from prototype to production and spend the rest of the time asking what else they can do.
-    </p>
+      <h1 class="hero-name">
+        <span class="line"><span class="glitch-wrap" data-text="RUJUL">RUJUL</span></span>
+        <span class="line"><span class="glitch-wrap" data-text="JADAV">JADAV</span></span>
+        <span class="line"><span class="glitch-wrap" data-text="PRAKASH">PRAKASH</span></span>
+      </h1>
 
-    <div class="pac-strip">
-      <div class="pac-dots">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
+      <p class="hero-sub">
+        Applied AI Engineer. MS CS at Indiana University. I take LLMs from prototype to production and spend the rest of the time asking what else they can do.
+      </p>
+
+      <div class="pac-strip">
+        <div class="pac-dots">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="pac-runner"></div>
       </div>
-      <div class="pac-runner"></div>
+
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-fill">See my work</a>
+        <a href="#contact" class="btn btn-outline">Get in touch</a>
+      </div>
     </div>
 
-    <div class="hero-cta">
-      <a href="#projects" class="btn btn-fill">See my work</a>
-      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    <!-- RIGHT: terminal -->
+    <div class="terminal-wrap">
+      <div class="terminal" id="terminal">
+        <div class="term-bar">
+          <div class="term-dot"></div>
+          <div class="term-dot"></div>
+          <div class="term-dot"></div>
+          <span class="term-title">rujul@portfolio ~ </span>
+        </div>
+        <div class="term-body" id="term-body"></div>
+        <div class="term-scanlines"></div>
+      </div>
     </div>
 
     <p class="hero-scroll-hint">scroll down</p>
@@ -1643,6 +1771,95 @@
       };
       input.click();
     });
+
+    // --- Terminal ---
+    (function() {
+      const LINES = [
+        { type: 'cmd', text: 'whoami' },
+        { type: 'out', cls: 't-white', text: 'rujul jadav prakash' },
+        { type: 'out', cls: '',        text: 'applied ai engineer @ project 990' },
+        { type: 'out', cls: '',        text: 'ms cs @ indiana university  |  gpa: 3.89' },
+        { type: 'blank' },
+        { type: 'cmd', text: 'ls skills/' },
+        { type: 'out', cls: 't-white', text: 'python  typescript  java  c++  sql' },
+        { type: 'out', cls: 't-white', text: 'llamaindex  dspy  langchain  openai-api' },
+        { type: 'out', cls: 't-white', text: 'oracle-cloud  azure  aws  docker  terraform' },
+        { type: 'blank' },
+        { type: 'cmd', text: 'cat projects/launchit.txt' },
+        { type: 'out', cls: 't-green', text: '[ LIVE ] launchit-frontend.onrender.com' },
+        { type: 'out', cls: '',        text: 'full-stack biz platform  +  claude api' },
+        { type: 'out', cls: '',        text: 'built end-to-end  |  shipped @ IU hackathon' },
+        { type: 'blank' },
+        { type: 'cmd', text: 'cat stats.json' },
+        { type: 'out', cls: 't-white', text: '{ records_processed : "518,000+",' },
+        { type: 'out', cls: 't-white', text: '  oracle_efficiency  : "-35% manual work",' },
+        { type: 'out', cls: 't-white', text: '  ms_gpa             :  3.89 }' },
+        { type: 'blank' },
+        { type: 'cmd', text: 'echo "open to opportunities"' },
+        { type: 'out', cls: 't-green', text: 'open to opportunities' },
+        { type: 'blank' },
+        { type: 'prompt' },
+      ];
+
+      const body = document.getElementById('term-body');
+      if (!body) return;
+
+      let idx = 0;
+
+      function addLine(line) {
+        const el = document.createElement('div');
+        el.className = 'term-line';
+
+        if (line.type === 'blank') {
+          el.style.height = '0.6rem';
+          el.innerHTML = '';
+        } else if (line.type === 'prompt') {
+          el.innerHTML = `<span class="t-prompt">&#8250;</span><span class="t-cmd"><span class="t-cursor"></span></span>`;
+        } else if (line.type === 'cmd') {
+          el.innerHTML = `<span class="t-prompt">&#8250;</span><span class="t-cmd"></span>`;
+        } else {
+          el.innerHTML = `<span class="t-out ${line.cls || ''}">${line.text}</span>`;
+        }
+
+        body.appendChild(el);
+        requestAnimationFrame(() => el.classList.add('visible'));
+        body.scrollTop = body.scrollHeight;
+
+        // type out command text character by character
+        if (line.type === 'cmd') {
+          const span = el.querySelector('.t-cmd');
+          const full = line.text;
+          let c = 0;
+          return new Promise(res => {
+            const t = setInterval(() => {
+              span.textContent += full[c++];
+              if (c >= full.length) { clearInterval(t); res(); }
+            }, 40);
+          });
+        }
+        return Promise.resolve();
+      }
+
+      async function run() {
+        for (idx = 0; idx < LINES.length; idx++) {
+          const line = LINES[idx];
+          await addLine(line);
+          // pause after commands before showing output
+          if (line.type === 'cmd') await delay(120);
+          else if (line.type === 'blank') await delay(60);
+          else await delay(55);
+        }
+        // restart after a pause
+        await delay(3800);
+        body.innerHTML = '';
+        run();
+      }
+
+      function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+      // kick off after page has settled
+      setTimeout(run, 1000);
+    })();
 
     // --- Nav active state on scroll ---
     const sections = document.querySelectorAll('section[id]');
